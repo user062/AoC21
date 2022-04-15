@@ -48,7 +48,7 @@ int get_basin_point(int locations[][COLS], int x, int y) {
     return 1+up+down+left+right;
 }
 
-int find_all_low_points(int matrix[][COLS]) {
+void find_all_low_points(int matrix[][COLS]) {
     int up, down, left, right;
 
     for (int i = 0; i < LINES ; i++)
@@ -78,12 +78,9 @@ int find_all_low_points(int matrix[][COLS]) {
             if (matrix[i][j] < up &&
                 matrix[i][j] < down &&
                 matrix[i][j] < right &&
-                matrix[i][j] < left) {
+                matrix[i][j] < left)
                 basins[++basin_count] = get_basin_point(matrix, i, j);
-            }
         }
-
-    return total_height;
 }
 
 int compare(const void *a, const void *b) {
@@ -110,11 +107,11 @@ int main(int argc, char *argv[])
         fgetc(fp);
     }
 
+    find_all_low_points(matrix);
 
     qsort(basins, basin_count+1, sizeof(int), &compare);
 
     printf("largest 3 basins: %d\n", basins[0]*basins[1]*basins[2]);
-
 
     return 0;
 }
